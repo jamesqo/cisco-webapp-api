@@ -25,14 +25,21 @@ def trim_submission(submission):
     result['author'] = result['author'].id
     return result
 
+def error(message, status):
+    return {'error': message}, status
+
 @app.route('/api/top/<subreddit>')
 def top(subreddit):
-    limit = request.args.get('limit', 10)
-    # TODO: Add 'scope' parameter to specify day, month, year, etc (default 'all')
+    scope = request.args.get('scope', 'all', type=str)
+    limit = request.args.get('limit', 10, type=int)
     if subreddit is None:
-        return {'error': 'Please specify a subreddit.'}, 400
+        return error('Please specify a subreddit.', 400)
+    if scope not in ('all', 'day', 'week', 'hour', 'month', 'year'):
+        return error('Invalid scope.', 400)
+    if limit < 0:
+        return error("limit can't be negative.", 400)
 
-    submissions = reddit.subreddit(subreddit).top(limit=limit) # TODO: Get all of them (lazily load)
+    submissions = reddit.subreddit(subreddit).top(time_filter=scope, limit=limit) # TODO: Get all of them (lazily load)
     submissions = list(map(trim_submission, submissions))
     return {
         'data': submissions
