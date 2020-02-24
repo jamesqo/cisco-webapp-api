@@ -4,7 +4,6 @@ from flask import Flask, render_template, request
 import praw
 
 app = Flask(__name__)
-app.config['APPLICATION_ROOT'] = '/api'
 reddit = praw.Reddit(client_id=os.environ['CWA_ID'],
                      client_secret=os.environ['CWA_SECRET'],
                      user_agent='flask:cisco-webapp-api:v1.0.0')
@@ -16,7 +15,6 @@ def trim_submission(submission):
     result = pluck(submission, [
         'author',
         'is_self',
-        'name', # TODO: What's this?
         'num_comments',
         'permalink',
         'score',
@@ -27,7 +25,7 @@ def trim_submission(submission):
     result['author'] = result['author'].id
     return result
 
-@app.route('/top/<subreddit>')
+@app.route('/api/top/<subreddit>')
 def top(subreddit):
     limit = request.args.get('limit', 10)
     # TODO: Add 'scope' parameter to specify day, month, year, etc (default 'all')
