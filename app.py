@@ -1,11 +1,13 @@
+import os
+
 from flask import Flask, render_template, request
 import praw
 
 app = Flask(__name__)
 app.config['APPLICATION_ROOT'] = '/api'
-# app.config['DEBUG'] = True
-# app.config['ENV'] = 'development'
-reddit = praw.Reddit('webapp', config_interpolation='basic')
+reddit = praw.Reddit(client_id=os.environ['CWA_ID'],
+                     client_secret=os.environ['CWA_SECRET'],
+                     user_agent='flask:cisco-webapp-api:v1.0.0')
 
 def pluck(obj, fields):
     return {field: getattr(obj, field) for field in fields}
