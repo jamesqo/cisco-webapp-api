@@ -1,6 +1,6 @@
 # cisco-webapp-api
 
-This repo contains the API implementation of the web app.
+This repo contains the API implementation of the web app. It uses the PRAW client in order to get the top articles for a given subreddit, trims unneeded fields, then returns the result in JSON.
 
 ## Frameworks Used
 
