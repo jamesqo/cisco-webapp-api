@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urljoin
 
 from flask import Flask, render_template, request
 import praw
@@ -23,6 +24,7 @@ def trim_submission(submission):
         'url'
     ])
     result['author'] = result['author'].id
+    result['permalink'] = urljoin('https://www.reddit.com/', result['permalink'])
     return result
 
 def error(message, status):
