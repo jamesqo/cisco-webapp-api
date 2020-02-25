@@ -28,7 +28,7 @@ def trim_submission(submission):
 def error(message, status):
     return {'error': message}, status
 
-@app.route('/api/top/<subreddit>')
+@app.route('/top/<subreddit>')
 def top(subreddit):
     scope = request.args.get('scope', 'all', type=str)
     limit = request.args.get('limit', 10, type=int)
