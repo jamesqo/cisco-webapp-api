@@ -2,7 +2,7 @@
 
 ## Instructions
 
-Go to https://www.reddit.com/prefs/apps and get a new client ID and client secret. Then run the following commands:
+Go to https://www.reddit.com/prefs/apps and get a new client ID and client secret. Then run
 
 ```
 export CWA_ID=your_client_id
